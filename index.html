@@ -18,11 +18,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
     }
     .bio-section, .hero-section {
       width: 100%;
-      padding: 50px;
+      max-width: 900px;
+      padding: 20px;
     }
     .hero-card {
       background: #1e1e1e;
@@ -30,10 +32,12 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
       text-align: center;
+      overflow: hidden;
     }
     .hero-card img {
       width: 100%;
-      border-radius: 10px;
+      height: auto;
+      display: block;
     }
     .bio {
       background: #1e1e1e;
@@ -42,8 +46,8 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     }
     .social-links a {
-      font-size: 1.8rem;
-      margin: 0 15px;
+      font-size: 1.5rem;
+      margin: 0 10px;
       color: #e0e0e0;
     }
     .social-links a:hover {
@@ -51,9 +55,22 @@
     }
     .social-resume {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       margin-top: 20px;
+    }
+    .social-resume .btn {
+      margin-top: 15px;
+    }
+    @media (min-width: 768px) {
+      .social-resume {
+        flex-direction: row;
+      }
+      .social-resume .btn {
+        margin-top: 0;
+        margin-left: 15px;
+      }
     }
   </style>
 </head>
@@ -80,7 +97,7 @@
             <a href="https://github.com/justinboehnen" target="_blank"><i class="bi bi-github"></i></a>
             <a href="https://linkedin.com/in/justinboehnen" target="_blank"><i class="bi bi-linkedin"></i></a>
           </div>
-          <a href="resume.pdf" class="btn btn-primary ms-3" download>Download Resume</a>
+          <a href="resume.pdf" class="btn btn-primary" download>Download Resume</a>
         </div>
       </div>
     </div>
