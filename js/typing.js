@@ -1,98 +1,142 @@
-// Phrases (text, lifespan in ms)
-const textArray = [
-  ["Crafting .NET solutions.", 2000],
-  ["Building modern web apps.", 2000],
-  ["Innovating in the cloud.", 2000],
-  ["Leveraging CI/CD pipelines.", 2000],
-  ["Designing scalable architectures.", 2000],
-  ["Design maintainability.", 2000],
-  ["Fusing code quality with creativity.", 2000],
-  ["Optimizing for performance at scale.", 2000],
-  ["Optimizing for reliabilityat sca", 700],   // Short display (typo)
-  ["Optimizing for reliability at scale.", 1500],
-  ["⛅ 💻 🚀", 3000]
-];
+import { phrases } from "./phrases.js";
 
-// Base delays (ms per character)
-const typingDelay = 70;
-const erasingDelay = 40;
-
-// Easing amplitudes: higher = more slowing near edges
-const typingAmplitude = 1.3;
-const erasingAmplitude = 2.8;
-
-// "Center" in [0..1]. 0.5 slows equally at start/end
-const typingCenter = 0.25;
-const erasingCenter = 0;
-
-let textArrayIndex = 0;
+const TYPING_DELAY_MS = 70; // ms per character
+const ERASING_DELAY_MS = 40; // ms per character
+const ERASING_LAST_DELAY_MS = 200; // ms per character
+const ERASING_LAST_COUNT = 3; // num of characters to slow down for
+let phraseIndex = 0;
+let wordIndex = 0;
 let charIndex = 0;
+
 let typedTextSpan;
 
-// Slows down near edges by (1 + amplitude * ratio)
-function edgeEase(p, amplitude, center) {
-  const distFromCenter = Math.abs(p - center);
-  const maxDist = Math.max(center, 1 - center);
-  const ratio = distFromCenter / maxDist;
-  return 1 + amplitude * ratio;
+// Joins all the words (with spaces in between) into one string.
+function buildFullPhrase(words) {
+  return words
+    .map((w, i) => (i < words.length - 1 ? w.text + " " : w.text))
+    .join("");
 }
 
-// Quadratic version of edgeEase:
-// Returns a factor ≥ 1.0.
-function edgeEaseQuadratic(p, amplitude, center) {
-  const distFromCenter = Math.abs(p - center);
-  const maxDist = Math.max(center, 1 - center);
-  const ratio = distFromCenter / maxDist;
-  return 1 + amplitude * (ratio ** 2);
-}
+// Given a prefix length (already typed characters),
+// determine which word and character index we should resume typing from.
+function initializeTypingFromPrefix(words, prefixLength) {
+  let totalSoFar = 0;
+  wordIndex = 0;
+  charIndex = 0;
 
-// Calculates how long to wait (ms) given the base delay and progress
-function getDelay(baseDelay, p, amplitude, center) {
-  return baseDelay * edgeEaseQuadratic(p, amplitude, center);
-}
+  for (let i = 0; i < words.length; i++) {
+    // Add a space except on the last word
+    const wordText = i < words.length - 1
+      ? words[i].text + " "
+      : words[i].text;
 
-function type() {
-  const currentPhrase = textArray[textArrayIndex][0];
-  const progress = charIndex / currentPhrase.length;
+    const wLen = wordText.length;
 
-  if (charIndex < currentPhrase.length) {
-    typedTextSpan.textContent += currentPhrase.charAt(charIndex);
-    charIndex++;
-    const delay = getDelay(typingDelay, progress, typingAmplitude, typingCenter);
-    setTimeout(type, delay);
-  } else {
-    const lifespan = textArray[textArrayIndex][1];
-    setTimeout(erase, lifespan);
+    if (totalSoFar + wLen <= prefixLength) {
+      // Entire word is already typed
+      totalSoFar += wLen;
+      wordIndex++;
+      charIndex = 0; // reset for the next word
+    } else {
+      // The prefix partially includes this word
+      charIndex = prefixLength - totalSoFar;
+      totalSoFar += charIndex; // now totalSoFar == prefixLength
+      break;
+    }
   }
 }
 
-function erase() {
-  const currentPhrase = textArray[textArrayIndex][0];
-  const progress = 1 - charIndex / currentPhrase.length;
+function typeWord(words) {
+  // If we've typed all words in this phrase, wait lifespan, then erase
+  if (wordIndex >= words.length) {
+    const lifespan = phrases[phraseIndex].lifespan ?? 2000;
+    setTimeout(erasePhrase, lifespan);
+    return;
+  }
 
-  if (charIndex > 0) {
-    charIndex--;
-    typedTextSpan.textContent = currentPhrase.substring(0, charIndex);
-    const nextIndex = (textArrayIndex + 1) % textArray.length;
-    const nextPhrase = textArray[nextIndex][0];
-    const currentText = typedTextSpan.textContent;
+  // Destructure with default fallback
+  const {
+    text,
+    typingFactor = 1,
+    pauseBefore = 0,
+    pauseAfter = 0
+  } = words[wordIndex];
 
-    if (currentText && nextPhrase.startsWith(currentText)) {
-      textArrayIndex = nextIndex;
-      setTimeout(type, 250);
-    } else {
-      const delay = getDelay(erasingDelay, progress, erasingAmplitude, erasingCenter);
-      setTimeout(erase, delay);
-    }
+  // If it's not the last word, add a trailing space
+  const fullWord = wordIndex < words.length - 1 ? text + " " : text;
+
+  // If charIndex===0, we haven't started this word yet => do pauseBefore
+  if (charIndex === 0 && pauseBefore > 0) {
+    setTimeout(() => {
+      typeOneCharacter();
+    }, pauseBefore);
   } else {
-    textArrayIndex = (textArrayIndex + 1) % textArray.length;
-    setTimeout(type, typingDelay);
+    typeOneCharacter();
+  }
+
+  // Helper to type one character, then recurse
+  function typeOneCharacter() {
+    if (charIndex < fullWord.length) {
+      typedTextSpan.textContent += fullWord[charIndex];
+      charIndex++;
+
+      const delay = TYPING_DELAY_MS * typingFactor;
+      setTimeout(() => typeWord(words), delay);
+    } else {
+      // Finished typing this word
+      charIndex = 0;
+      wordIndex++;
+      setTimeout(() => typeWord(words), pauseAfter);
+    }
+  }
+}
+
+function erasePhrase() {
+  const currentText = typedTextSpan.textContent;
+  const length = currentText.length;
+
+  // If there are still chars left to erase...
+  if (length > 0) {
+    // Remove last char
+    const newText = currentText.slice(0, -1);
+    typedTextSpan.textContent = newText;
+
+    // Compare with the next phrase
+    const nextIndex = (phraseIndex + 1) % phrases.length;
+    const nextPhraseText = buildFullPhrase(phrases[nextIndex].words);
+
+    // If what's left is a prefix of the next phrase
+    if (newText && nextPhraseText.startsWith(newText)) {
+      // Jump to the next phrase
+      phraseIndex = nextIndex;
+      // Figure out how many characters are already typed
+      initializeTypingFromPrefix(phrases[phraseIndex].words, newText.length);
+
+      // Wait a bit before typing resumes
+      setTimeout(() => {
+        typeWord(phrases[phraseIndex].words);
+      }, TYPING_DELAY_MS);
+      return;
+    }
+
+    // Otherwise, keep erasing
+    const eraseDelay =
+      length <= ERASING_LAST_COUNT ? ERASING_LAST_DELAY_MS : ERASING_DELAY_MS;
+    setTimeout(erasePhrase, eraseDelay);
+  } else {
+    // Fully erased, move on to the next phrase
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+    wordIndex = 0;
+    charIndex = 0;
+
+    typeWord(phrases[phraseIndex].words);
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   typedTextSpan = document.querySelector(".typed-text");
-  typedTextSpan.textContent = textArray[0][0];
-  charIndex = textArray[0][0].length;
-  setTimeout(erase, 3000);
+  const firstPhraseText = buildFullPhrase(phrases[0].words);
+  typedTextSpan.textContent = firstPhraseText;
+  charIndex = firstPhraseText.length;
+  setTimeout(erasePhrase, 3000);
 });
