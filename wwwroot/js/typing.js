@@ -4,6 +4,7 @@ const TYPING_DELAY_MS = 70; // ms per character
 const ERASING_DELAY_MS = 40; // ms per character
 const ERASING_LAST_DELAY_MS = 200; // ms per character
 const ERASING_LAST_COUNT = 3; // num of characters to slow down for
+
 let phraseIndex = 0;
 let wordIndex = 0;
 let charIndex = 0;
@@ -16,6 +17,7 @@ function buildFullPhrase(words) {
     .map((w, i) => (i < words.length - 1 ? w.text + " " : w.text))
     .join("");
 }
+
 
 // Given a prefix length (already typed characters),
 // determine which word and character index we should resume typing from.
@@ -46,6 +48,16 @@ function initializeTypingFromPrefix(words, prefixLength) {
   }
 }
 
+// Find the length of the common prefix between two strings.
+function findCommonPrefixLength(a, b) {
+  let i = 0;
+  while (i < a.length && i < b.length && a[i] === b[i]) {
+    i++;
+  }
+  return i;
+}
+
+// Type one word at a time (potentially with pauses).
 function typeWord(words) {
   // If we've typed all words in this phrase, wait lifespan, then erase
   if (wordIndex >= words.length) {
@@ -74,7 +86,7 @@ function typeWord(words) {
     typeOneCharacter();
   }
 
-  // Helper to type one character, then recurse
+  // Type one character, then recurse
   function typeOneCharacter() {
     if (charIndex < fullWord.length) {
       typedTextSpan.textContent += fullWord[charIndex];
@@ -91,38 +103,49 @@ function typeWord(words) {
   }
 }
 
+// Erase characters one by one.
+// If at any point the remaining text is a prefix of the next phrase,
+// jump to the next phrase immediately. Also use slower erase speed for 
+// the last few characters before a jump or a full erase.
 function erasePhrase() {
   const currentText = typedTextSpan.textContent;
   const length = currentText.length;
 
-  // If there are still chars left to erase...
   if (length > 0) {
-    // Remove last char
-    const newText = currentText.slice(0, -1);
-    typedTextSpan.textContent = newText;
-
-    // Compare with the next phrase
+    // Compute the next phrase and how many chars until prefix matches
     const nextIndex = (phraseIndex + 1) % phrases.length;
     const nextPhraseText = buildFullPhrase(phrases[nextIndex].words);
 
-    // If what's left is a prefix of the next phrase
+    // Find how many characters we need to erase until currentText 
+    // becomes a prefix of nextPhraseText
+    const commonPrefixLen = findCommonPrefixLength(currentText, nextPhraseText);
+    const charsNeededToEraseForPrefix = length - commonPrefixLen;
+
+    // Remove the last character
+    const newText = currentText.slice(0, -1);
+    typedTextSpan.textContent = newText;
+
+    // Check if we've become a prefix of the next phrase after removing one char
     if (newText && nextPhraseText.startsWith(newText)) {
       // Jump to the next phrase
       phraseIndex = nextIndex;
-      // Figure out how many characters are already typed
       initializeTypingFromPrefix(phrases[phraseIndex].words, newText.length);
 
-      // Wait a bit before typing resumes
+      // Start typing the next phrase
       setTimeout(() => {
         typeWord(phrases[phraseIndex].words);
       }, TYPING_DELAY_MS);
-      return;
-    }
+    } else {
+      // Decide whether to use normal or slower erasing
+      // We just removed one character, so now we have (charsNeededToEraseForPrefix - 1) left 
+      // to erase before prefix match triggers (or full erase).
+      let eraseDelay = ERASING_DELAY_MS;
+      if (charsNeededToEraseForPrefix - 1 < ERASING_LAST_COUNT) {
+        eraseDelay = ERASING_LAST_DELAY_MS;
+      }
 
-    // Otherwise, keep erasing
-    const eraseDelay =
-      length <= ERASING_LAST_COUNT ? ERASING_LAST_DELAY_MS : ERASING_DELAY_MS;
-    setTimeout(erasePhrase, eraseDelay);
+      setTimeout(erasePhrase, eraseDelay);
+    }
   } else {
     // Fully erased, move on to the next phrase
     phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -135,8 +158,11 @@ function erasePhrase() {
 
 document.addEventListener("DOMContentLoaded", () => {
   typedTextSpan = document.querySelector(".typed-text");
+  
+  // Start by displaying the first phrase fully, then erase after a delay
   const firstPhraseText = buildFullPhrase(phrases[0].words);
   typedTextSpan.textContent = firstPhraseText;
   charIndex = firstPhraseText.length;
+
   setTimeout(erasePhrase, 3000);
 });
