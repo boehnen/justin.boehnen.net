@@ -1,9 +1,10 @@
 import { phrases } from "./phrases.js";
 
-const TYPING_DELAY_MS = 70; // ms per character
-const ERASING_DELAY_MS = 40; // ms per character
-const ERASING_LAST_DELAY_MS = 200; // ms per character
-const ERASING_LAST_COUNT = 3; // num of characters to slow down for
+const TYPING_DELAY_MS = 70; // Base typing time per character
+const TYPING_OFFSET_MS = 10; // Max random typing delay or speedup
+const ERASING_DELAY_MS = 40; // Time to erase each character
+const ERASING_LAST_DELAY_MS = 200; // Delay for the last few erased characters
+const ERASING_LAST_COUNT = 3; // Number of characters with extra erasing delay
 
 let phraseIndex = 0;
 let wordIndex = 0;
@@ -18,6 +19,9 @@ function buildFullPhrase(words) {
     .join("");
 }
 
+function getRandomNumberBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 // Given a prefix length (already typed characters),
 // determine which word and character index we should resume typing from.
@@ -92,7 +96,8 @@ function typeWord(words) {
       typedTextSpan.textContent += fullWord[charIndex];
       charIndex++;
 
-      const delay = TYPING_DELAY_MS * typingFactor;
+      const offset = getRandomNumberBetween(-TYPING_OFFSET_MS, TYPING_OFFSET_MS);
+      const delay = (TYPING_DELAY_MS  * typingFactor) + offset;
       setTimeout(() => typeWord(words), delay);
     } else {
       // Finished typing this word
