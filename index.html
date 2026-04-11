@@ -4,121 +4,190 @@
   <link rel="icon" type="image/x-icon" href="wwwroot/images/icon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Justin Boehnen</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <title>Justin Boehnen | Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
-  <div class="container container-sm d-flex flex-column">
-    <!-- About -->
-    <div class="about-section">
-      <div class="header-container">
-        <h1 class="display-5">
-          <span class="typed-text">Crafting .NET solutions.</span>
-          <span class="cursor">&nbsp;</span>
-        </h1>
-      </div>
-      <p>
-        I'm a dedicated .NET developer with a strong passion for creating scalable and efficient web applications.
-        I have 3 years of professional experience with ASP.NET Core, Blazor, and Azure, and I love solving complex problems by writing
-        clean, maintainable code. Whether building APIs, crafting front-end experiences, or deploying cloud solutions,
-        I strive to deliver high-quality software that meets user needs.
-      </p>
-      <div class="social-resume">
-        <div class="social-links mb-3 mb-sm-0">
-          <a href="https://github.com/boehnen" target="_blank"><i class="bi bi-github"></i></a>
-          <a href="https://linkedin.com/in/justinboehnen" target="_blank"><i class="bi bi-linkedin"></i></a>
-          <a href="mailto:justinboehnen@gmail.com"><i class="bi bi-envelope-fill"></i></a>
+  <div class="dashboard">
+    <!-- Top - About -->
+    <header class="about">
+      <div class="about-left">
+        <img src="wwwroot/images/headshot.jpg" alt="Justin Boehnen" class="avatar" />
+        <div class="about-text">
+          <h1>Justin Boehnen</h1>
+          <p class="role"><span class="accent">Software Engineer</span></p>
+          <p class="summary">I architect data pipelines that wrangle massive, messy data from the real world. I integrate AI and ML into workflows to improve efficiency and accuracy, from LLM-powered analysis to custom models that save hours of manual work.</p>
+          <div class="skills">
+            <span>C#</span>
+            <span>.NET</span>
+            <span>TypeScript</span>
+            <span>Python</span>
+            <span>Azure</span>
+            <span>PostgreSQL</span>
+            <span>Docker</span>
+            <span>LLM Integration</span>
+            <span>MCP</span>
+          </div>
         </div>
-        <a href="wwwroot/documents/resume.pdf" class="btn btn-primary" download>Download Resume</a>
       </div>
-    </div>
-    <!-- Projects -->
-    <div class="projects-section">
-      <h2>Projects</h2>
-      <div class="row row-cols-1 row-cols-md-2 g-4">
-        <!-- Project 1 -->
-        <div class="col">
-          <div class="card bg-image bg-dark w-100 text-white" style="background-image: url('wwwroot/images/project1.png');">
-            <div class="overlay"></div>
-            <div class="card-body p-0 d-flex flex-column justify-content-end position-relative">
-              <a href="https://chat.boehnen.net/" target="_blank" class="stretched-link"></a> 
-              <div class="card-info">
-                <h5 class="card-title">Live Chat Demo</h5>
-                <p class="card-text mb-2">Server-sent event chat service.</p>
-                <div class="mb-3">
-                  <span class="badge bg-secondary">C#</span>
-                  <span class="badge bg-secondary">ASP.NET Core</span>
-                  <span class="badge bg-secondary">Blazor</span>
-                  <span class="badge bg-secondary">Azure</span>
-                </div>
-                <a href="https://chat.boehnen.net/" class="btn btn-primary" target="_blank"
-                   style="position: relative; z-index: 2;">In Action</a>
-                <a href="https://github.com/boehnen/sse-chat" class="btn btn-primary" target="_blank"
-                   style="position: relative; z-index: 2;">
-                  <i class="bi bi-github"></i> Source
-                </a>
-              </div>
+      <nav class="links">
+        <a href="https://github.com/boehnen" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/justinboehnen" target="_blank">LinkedIn</a>
+        <a href="mailto:justinboehnen@gmail.com">Email</a>
+      </nav>
+    </header>
+
+    <!-- Bottom - Projects Grid -->
+    <main class="projects-grid">
+      <!-- APIs -->
+      <article class="project-card">
+        <p class="card-tagline">I build world-class APIs and AI pipelines <span class="arrow">↓</span></p>
+        <div class="project">
+          <div class="card-header">
+            <h2>BrainGap <span class="status-badge live">Live</span></h2>
+            <a href="https://braingap.io" target="_blank" class="live-link">Demo</a>
+          </div>
+          <p class="card-subtitle">Adaptive Assessment Platform</p>
+
+          <h3 class="card-subheader">The Problem</h3>
+          <p class="card-desc">Building quality assessments traditionally requires psychometricians and months of calibration. Most AI quiz tools just generate questions with no validation.</p>
+
+          <h3 class="card-subheader">My Solution</h3>
+          <p class="card-desc">API-first platform where Claude generates structured content and OpenAI embeddings deduplicate concepts. But generation is just the start. Every response calibrates item parameters using the same 2PL IRT model behind the GRE and GMAT.</p>
+
+          <h3 class="card-subheader">How I Use AI</h3>
+          <p class="card-desc">I use AI to be the expert where I'm not. But I don't blindly trust it. Every AI-generated item flows through <strong>grounded feedback loops</strong>, validated by real data, not model confidence. Poor performers self-identify and flag for review.</p>
+
+          <div class="card-tags">
+            <span>.NET Aspire</span>
+            <span>Blazor</span>
+            <span>PostgreSQL</span>
+            <span>pgvector</span>
+            <span>Claude API</span>
+            <span>OpenAI Embeddings</span>
+            <span>OAuth</span>
+          </div>
+        </div>
+              </article>
+
+      <!-- Data -->
+      <article class="project-card">
+        <p class="card-tagline">I make complex data accessible <span class="arrow">↓</span></p>
+        <div class="project">
+          <div class="card-header">
+            <h2>ClipMap <span class="status-badge live">Live</span></h2>
+            <div class="card-links">
+              <a href="https://clipmap.io" target="_blank" class="live-link">Demo</a>
+              <a href="https://github.com/boehnen/clipmap" target="_blank" class="source-link">Source</a>
             </div>
           </div>
+          <p class="card-subtitle">Zero-Backend Geospatial Exports</p>
+
+          <h3 class="card-subheader">The Problem</h3>
+          <p class="card-desc">The maker and art map market needs SVG exports of geographic regions for laser cutting, CNC, and wall art. The pipeline for getting these files is not well defined, laborious, complex, and slow.</p>
+
+          <h3 class="card-subheader">My Solution</h3>
+          <p class="card-desc">Used Node.js and mapshaper to pre-process 95GB of OpenStreetMap into 157k GeoJSON tiles across 5 LOD tiers. All clipping, projection, and SVG rendering runs client-side. Tiles served from R2.</p>
+
+          <h3 class="card-subheader">Why No Backend</h3>
+          <p class="card-desc"><strong>Pros:</strong> Zero compute costs, infinite scale, no cold starts, globally distributed via CDN. <strong>Tradeoffs:</strong> Data must be pre-processed, can't support arbitrary queries, tile updates require full regeneration.</p>
+
+          <h3 class="card-subheader">What's Next</h3>
+          <p class="card-desc">Roads and boundary layers in progress. Exploring vector tile formats for smaller payloads.</p>
+
+          <div class="card-tags">
+            <span>TypeScript</span>
+            <span>Next.js</span>
+            <span>React</span>
+            <span>Leaflet</span>
+            <span>Node.js</span>
+            <span>mapshaper</span>
+            <span>GeoJSON</span>
+            <span>Cloudflare R2</span>
+          </div>
         </div>
-        <!-- Project 2 -->
-        <div class="col">
-          <div class="card bg-image bg-dark w-100 text-white" style="background-image: url('wwwroot/images/project2.png');">
-            <div class="overlay"></div>
-            <div class="card-body p-0 d-flex flex-column justify-content-end position-relative">
-              <a href="https://chess.boehnen.net/" target="_blank" class="stretched-link"></a>
-              <div class="card-info">
-                <h5 class="card-title">Open Chess</h5>
-                <p class="card-text mb-2">A RESTful api for generating board state vector images.</p>
-                <div class="mb-3">
-                  <span class="badge bg-secondary">Rust</span>
-                  <span class="badge bg-secondary">Axum</span>
-                  <span class="badge bg-secondary">Blazor</span>
-                  <span class="badge bg-secondary">Azure</span>
-                </div>
-                <a href="https://chess.boehnen.net/" class="btn btn-primary" target="_blank"
-                   style="position: relative; z-index: 2;">In Action</a>
-                <a href="https://github.com/boehnen/openchess-rs" class="btn btn-primary" target="_blank"
-                   style="position: relative; z-index: 2;">
-                  <i class="bi bi-github"></i> Source
-                </a>
-              </div>
+              </article>
+
+      <!-- ML -->
+      <article class="project-card">
+        <p class="card-tagline">I train models for the real world <span class="arrow">↓</span></p>
+        <div class="project">
+          <div class="card-header">
+            <h2>SatSuite</h2>
+          </div>
+          <p class="card-subtitle">Satellite Imagery ML Pipeline</p>
+
+          <h3 class="card-subheader">The Problem</h3>
+          <p class="card-desc">Satellite imagery analysis requires specialized ML pipelines. Off-the-shelf models don't generalize well to aerial perspectives and specific land cover categories.</p>
+
+          <h3 class="card-subheader">My Solution</h3>
+          <p class="card-desc">Fine-tuned <strong>SegFormer-b0</strong> on OpenEarthMap for 8-class segmentation (mIoU: 0.596). Training in ~45 min on a free Colab T4. Deployed to HuggingFace Spaces for free inference.</p>
+
+          <h3 class="card-subheader">Challenges</h3>
+          <p class="card-desc">Class imbalance in satellite data, inconsistent imagery quality across regions, and managing inference costs for large-scale analysis.</p>
+
+          <h3 class="card-subheader">What's Next</h3>
+          <p class="card-desc">Train on better hardware, more data, longer. The goal is production-grade models for real-world geospatial analysis.</p>
+
+          <h3 class="card-subheader">Models</h3>
+          <div class="modules">
+            <div class="module">
+              <span class="module-name">SatLens</span>
+              <span class="module-status live">Live</span>
+              <span class="module-desc">Land cover segmentation</span>
+              <span class="module-links">
+                <a href="https://huggingface.co/spaces/boehnen/satlens" target="_blank" class="demo-link">Demo</a>
+                <a href="https://github.com/boehnen/satlens" target="_blank" class="source-link">Source</a>
+              </span>
+            </div>
+            <div class="module soon">
+              <span class="module-name">SatDiff</span>
+              <span class="module-status">Soon</span>
+              <span class="module-desc">Change detection</span>
+              <span class="module-links disabled">Demo · Source</span>
+            </div>
+            <div class="module soon">
+              <span class="module-name">SatCount</span>
+              <span class="module-status">Soon</span>
+              <span class="module-desc">Object counting</span>
+              <span class="module-links disabled">Demo · Source</span>
             </div>
           </div>
-        </div>
-      </div><!-- End row -->
-    </div><!-- End projects-section -->
-    <footer class="mt-auto">
-      <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-          <a class="mb-3 me-2 mb-md-0 text-decoration-none lh-1">
-            <svg class="bi" width="30" height="24" alt="logo">
-              <use xlink:href="wwwroot/images/logo.svg#logo" />
-            </svg>
-          </a>
-          <span class="mb-3 mb-md-0">© 2025 Justin Boehnen</span>
-        </div>
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-          <div class="footer-social-links mb-3 mb-sm-0">
-            <a href="https://github.com/boehnen" target="_blank"><i class="bi bi-github"></i></a>
-            <a href="https://linkedin.com/in/justinboehnen" target="_blank"><i class="bi bi-linkedin"></i></a>
-            <a href="mailto:justinboehnen@gmail.com"><i class="bi bi-envelope-fill"></i></a>
+
+          <div class="card-tags">
+            <span>Python</span>
+            <span>PyTorch</span>
+            <span>Transformers</span>
+            <span>SegFormer</span>
+            <span>Gradio</span>
+            <span>HuggingFace</span>
+            <span>OpenEarthMap</span>
           </div>
-        </ul>
-      </div>
-    </footer>
+        </div>
+              </article>
+    </main>
+  </div>
+  <script>
+    const dashboard = document.querySelector('.dashboard');
+    const cards = document.querySelectorAll('.project-card');
+    const about = document.querySelector('.about');
 
-    </footer>
-    <!-- <footer class="mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    </footer> -->
-  </div><!-- End container -->
+    dashboard.addEventListener('mousemove', e => {
+      // Update all project cards
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+      // Update about card
+      const aboutRect = about.getBoundingClientRect();
+      about.style.setProperty('--mouse-x', `${e.clientX - aboutRect.left}px`);
+      about.style.setProperty('--mouse-y', `${e.clientY - aboutRect.top}px`);
+    });
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="wwwroot/js/typing.js"></script>
+      </script>
 </body>
 </html>

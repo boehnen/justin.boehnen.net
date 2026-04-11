@@ -1,0 +1,26 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Abstract map/terrain lines -->
+  <path d="M 30 140 Q 60 120 90 130 Q 120 140 150 125 Q 170 115 180 120" opacity="0.3"/>
+  <path d="M 25 110 Q 55 95 85 105 Q 115 115 145 100 Q 165 90 185 95" opacity="0.25"/>
+  <path d="M 35 80 Q 65 65 95 75 Q 125 85 155 70 Q 175 60 190 65" opacity="0.2"/>
+
+  <!-- Selection/crop box -->
+  <rect x="55" y="70" width="90" height="70" opacity="0.5" stroke-dasharray="4 2"/>
+
+  <!-- Corner markers -->
+  <path d="M 55 80 L 55 70 L 65 70" opacity="0.6"/>
+  <path d="M 135 70 L 145 70 L 145 80" opacity="0.6"/>
+  <path d="M 145 130 L 145 140 L 135 140" opacity="0.6"/>
+  <path d="M 65 140 L 55 140 L 55 130" opacity="0.6"/>
+
+  <!-- Grid dots suggesting tiles -->
+  <circle cx="75" cy="90" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="100" cy="90" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="125" cy="90" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="75" cy="110" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="100" cy="110" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="125" cy="110" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="75" cy="130" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="100" cy="130" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+  <circle cx="125" cy="130" r="1.5" fill="white" stroke="none" opacity="0.3"/>
+</svg>
