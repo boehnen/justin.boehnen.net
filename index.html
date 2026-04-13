@@ -12,14 +12,30 @@
 </head>
 <body>
   <div class="dashboard">
-    <!-- Top - About -->
+    <!-- About -->
     <header class="about">
       <div class="about-left">
-        <img src="wwwroot/images/headshot.jpg" alt="Justin Boehnen" class="avatar" />
+        <div class="avatar-section">
+          <img src="wwwroot/images/headshot.jpg" alt="Justin Boehnen" class="avatar" />
+          <nav class="links">
+            <a href="https://github.com/boehnen" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/justinboehnen" target="_blank">LinkedIn</a>
+            <a href="mailto:justinboehnen@gmail.com">Email</a>
+          </nav>
+        </div>
         <div class="about-text">
           <h1>Justin Boehnen</h1>
-          <p class="role"><span class="accent">Software Engineer</span></p>
-          <p class="summary">I architect data pipelines that wrangle massive, messy data from the real world. I integrate AI and ML into workflows to improve efficiency and accuracy, from LLM-powered analysis to custom models that save hours of manual work. And I ship the full stack: backend APIs, web apps, mobile.</p>
+          <p class="role"><span class="accent">Senior Software Engineer | Platform Architect | AI Engineer</span></p>
+          <div class="bio-columns">
+            <div class="bio-column">
+              <h3 class="bio-header">What I Do</h3>
+              <p class="summary">I architect data pipelines that wrangle massive, messy data from the real world. I integrate AI and ML into workflows to improve efficiency and accuracy, from LLM-powered analysis to custom models that save hours of manual work. And I ship the full stack: backend APIs, web apps, mobile.</p>
+            </div>
+            <div class="bio-column">
+              <h3 class="bio-header">Currently</h3>
+              <p class="summary">I'm the Cloud Development Lead creating land management software for the largest private landowner in the US. I own the platform architecture, backend APIs, infrastructure, and production operations for a microservices system serving mobile, desktop, and web clients. I inherited a monolith and decomposed it into independently deployable services with zero downtime. I'm currently integrating AI, MCP, ML, and LLMs to improve user experience and workflow efficiencies across the board.</p>
+            </div>
+          </div>
           <div class="skills">
             <span>C#</span>
             <span>.NET</span>
@@ -33,18 +49,13 @@
           </div>
         </div>
       </div>
-      <nav class="links">
-        <a href="https://github.com/boehnen" target="_blank">GitHub</a>
-        <a href="https://linkedin.com/in/justinboehnen" target="_blank">LinkedIn</a>
-        <a href="mailto:justinboehnen@gmail.com">Email</a>
-      </nav>
     </header>
 
     <!-- Bottom - Projects Grid -->
     <main class="projects-grid">
       <!-- APIs -->
       <article class="project-card">
-        <p class="card-tagline">I build world-class APIs and AI integrations <span class="arrow">↓</span></p>
+        <p class="card-tagline">I build world-class APIs and AI integrations</p>
         <div class="project">
           <div class="card-header">
             <h2>BrainGap <span class="status-badge live">Live</span></h2>
@@ -70,12 +81,12 @@
             <span>OpenAI Embeddings</span>
             <span>OAuth</span>
           </div>
-        </div>
+                  </div>
               </article>
 
       <!-- Data -->
       <article class="project-card">
-        <p class="card-tagline">I make complex data accessible <span class="arrow">↓</span></p>
+        <p class="card-tagline">I make complex data accessible</p>
         <div class="project">
           <div class="card-header">
             <h2>ClipMap <span class="status-badge live">Live</span></h2>
@@ -108,12 +119,12 @@
             <span>GeoJSON</span>
             <span>Cloudflare R2</span>
           </div>
-        </div>
+                  </div>
               </article>
 
       <!-- ML -->
       <article class="project-card">
-        <p class="card-tagline">I train models for the real world <span class="arrow">↓</span></p>
+        <p class="card-tagline">I train models for the real world</p>
         <div class="project">
           <div class="card-header">
             <h2>SatSuite</h2>
@@ -130,7 +141,7 @@
           <p class="card-desc">Class imbalance in satellite data, inconsistent imagery quality across regions, and managing inference costs for large-scale analysis.</p>
 
           <h3 class="card-subheader">What's Next</h3>
-          <p class="card-desc">Train on better hardware, more data, longer. The goal is production-grade models for real-world geospatial analysis.</p>
+          <p class="card-desc">Change detection and object counting models. Train on better hardware, more data, longer. The goal is production-grade models for real-world geospatial analysis.</p>
 
           <h3 class="card-subheader">Models</h3>
           <div class="modules">
@@ -143,18 +154,6 @@
                 <a href="https://github.com/boehnen/satlens" target="_blank" class="source-link">Source</a>
               </span>
             </div>
-            <div class="module soon">
-              <span class="module-name">SatDiff</span>
-              <span class="module-status">Soon</span>
-              <span class="module-desc">Change detection</span>
-              <span class="module-links disabled">Demo · Source</span>
-            </div>
-            <div class="module soon">
-              <span class="module-name">SatCount</span>
-              <span class="module-status">Soon</span>
-              <span class="module-desc">Object counting</span>
-              <span class="module-links disabled">Demo · Source</span>
-            </div>
           </div>
 
           <div class="card-tags">
@@ -166,7 +165,7 @@
             <span>HuggingFace</span>
             <span>OpenEarthMap</span>
           </div>
-        </div>
+                  </div>
               </article>
     </main>
   </div>
@@ -188,6 +187,6 @@
       about.style.setProperty('--mouse-y', `${e.clientY - aboutRect.top}px`);
     });
 
-      </script>
+  </script>
 </body>
 </html>
